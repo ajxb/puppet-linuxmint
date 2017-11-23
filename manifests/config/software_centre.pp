@@ -5,15 +5,15 @@
 class linuxmint::config::software_centre () inherits linuxmint::params {
   # Software Centre / Updates configuration
   file { '/etc/apt/sources.list.d/official-package-repositories.list':
-    ensure  => file,
+    ensure => file,
     source => 'puppet:///modules/linuxmint/official-package-repositories.list',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
   }
 
-  exec { "apt-update":
-    command   => "/usr/bin/apt-get update",
+  exec { 'apt-update':
+    command   => '/usr/bin/apt-get update',
     subscribe => File['/etc/apt/sources.list.d/official-package-repositories.list'],
   }
 
