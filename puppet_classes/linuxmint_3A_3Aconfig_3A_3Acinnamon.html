@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Puppet Class: linuxmint
+  Puppet Class: linuxmint::config::cinnamon
   
     &mdash; Documentation by YARD 0.9.8
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  pathId = "puppet_classes::linuxmint";
+  pathId = "puppet_classes::linuxmint::config::cinnamon";
   relpath = '../';
 </script>
 
@@ -39,7 +39,7 @@
     <a href="../_index.html">Index (l)</a> &raquo;
     <span class='title'><span class='object_link'>Puppet Classes</span></span>
      &raquo; 
-    <span class="title">linuxmint</span>
+    <span class="title">linuxmint::config::cinnamon</span>
   
 </div>
 
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Puppet Class: linuxmint</h1>
+      <div id="content"><h1>Puppet Class: linuxmint::config::cinnamon</h1>
 <div class="box_info">
   
   <dl>
@@ -71,7 +71,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>
-      manifests/init.pp
+      manifests/config/cinnamon.pp
     </dd>
   </dl>
 </div>
@@ -79,29 +79,14 @@
 <div class="docstring">
   <div class="discussion">
     
-<p>Class: linuxmint</p>
+<p>linuxmint::config::cinnamon</p>
 
-<p>Manage configuration of Linux Mint</p>
+<p>Configures Linux Mint Cinnamon desktop</p>
 
   </div>
 </div>
 <div class="tags">
-  
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
-      
-        <p class="example_title"><div class='inline'>
-<p>Declaring the class</p>
-</div></p>
-      
-      <pre class="example code"><code>class { &#39;linuxmint&#39;:
-  user  =&gt; &#39;theuser&#39;,
-  group =&gt; &#39;thegroup&#39;,
-}</code></pre>
-    
-  </div>
-<p class="tag_title">Parameters:</p>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -150,6 +135,12 @@
         <pre class="lines">
 
 
+7
+8
+9
+10
+11
+12
 13
 14
 15
@@ -165,26 +156,70 @@
 25
 26
 27
-28</pre>
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 13</span>
+        <pre class="code"><span class="info file"># File 'manifests/config/cinnamon.pp', line 7</span>
 
-class linuxmint (
-  String $user  = undef,
-  String $group = undef,
+class linuxmint::config::cinnamon (
+    String $user  = undef,
+    String $group = undef,
 ) inherits linuxmint::params {
   assert_type(String[1], $user)
   assert_type(String[1], $group)
 
-  class { &#39;linuxmint::config::cinnamon&#39;:
-    user  =&gt; $user,
-    group =&gt; $group,
+  package { &#39;dconf-tools&#39;:
+    ensure =&gt; latest,
   }
-  class { &#39;linuxmint::config::software_centre&#39;: }
 
-  contain linuxmint::config::cinnamon
-  contain linuxmint::config::software_centre
+  # Move the panel to the top of the screen
+  gnome::gsettings { &#39;org.cinnamon_panels-enabled&#39;:
+    schema =&gt; &#39;org.cinnamon&#39;,
+    key    =&gt; &#39;panels-enabled&#39;,
+    value  =&gt; &#39;[\&#39;1:0:top\&#39;]&#39;,
+  }
+
+  # Configure panel applets
+  gnome::gsettings { &#39;org.cinnamon_enabled-applets&#39;:
+    schema =&gt; &#39;org.cinnamon&#39;,
+    key    =&gt; &#39;enabled-applets&#39;,
+    value  =&gt; &#39;[\&#39;panel1:right:0:systray@cinnamon.org:0\&#39;, \&#39;panel1:left:0:menu@cinnamon.org:1\&#39;, \&#39;panel1:left:1:show-desktop@cinnamon.org:2\&#39;, \&#39;panel1:left:2:panel-launchers@cinnamon.org:3\&#39;, \&#39;panel1:left:3:window-list@cinnamon.org:4\&#39;, \&#39;panel1:right:1:keyboard@cinnamon.org:5\&#39;, \&#39;panel1:right:2:notifications@cinnamon.org:6\&#39;, \&#39;panel1:right:3:removable-drives@cinnamon.org:7\&#39;, \&#39;panel1:right:4:user@cinnamon.org:8\&#39;, \&#39;panel1:right:5:network@cinnamon.org:9\&#39;, \&#39;panel1:right:7:power@cinnamon.org:11\&#39;, \&#39;panel1:center:0:calendar@cinnamon.org:12\&#39;, \&#39;panel1:right:9:sound@cinnamon.org:13\&#39;]&#39;,
+  }
+
+  exec { &#39;dbus-launch dconf reset -f /org/cinnamon/&#39;:
+    command   =&gt; &#39;/usr/bin/dbus-launch /usr/bin/dconf reset -f /org/cinnamon/&#39;,
+    user      =&gt; $user,
+    subscribe =&gt; Gnome::Gsettings[&#39;org.cinnamon_enabled-applets&#39;],
+    require   =&gt; Package[&#39;dconf-tools&#39;],
+  }
+
+  # Configure cinnamon calendar applet
+  file { &quot;/home/${user}/.cinnamon/configs/calendar@cinnamon.org/12.json&quot;:
+    ensure =&gt; file,
+    source =&gt; &#39;puppet:///modules/linuxmint/cinnamon/calendar@cinnamon.org/12.json&#39;,
+    owner  =&gt; $user,
+    group  =&gt; $group,
+    mode   =&gt; &#39;0664&#39;,
+  }
 }</pre>
       </td>
     </tr>

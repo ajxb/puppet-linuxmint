@@ -93,13 +93,18 @@ Mint</a> according to my own personal preferences.</p>
 <h3 id="label-What+linuxmint+affects">What linuxmint affects</h3>
 <ul><li>
 <p>Software centre configuration</p>
+</li><li>
+<p>Cinnamon configuration</p>
 </li></ul>
 
 <h3 id="label-Beginning+with+linuxmint">Beginning with linuxmint</h3>
 
 <p>To configure Linux Mint using this module</p>
 
-<p><code>include linuxmint</code></p>
+<pre class="code ruby"><code class="ruby">class { &#39;linuxmint&#39;:
+  user  =&gt; &#39;auser&#39;,
+  group =&gt; &#39;agroup&#39;,
+}</code></pre>
 
 <h2 id="label-Usage">Usage</h2>
 
@@ -107,7 +112,10 @@ Mint</a> according to my own personal preferences.</p>
 href="#what-linuxmint-affects">What linuxmint affects</a>. To use default
 configuration:</p>
 
-<p><code>include linuxmint</code></p>
+<pre class="code ruby"><code class="ruby">class { &#39;linuxmint&#39;:
+  user  =&gt; &#39;auser&#39;,
+  group =&gt; &#39;agroup&#39;,
+}</code></pre>
 
 <h2 id="label-Reference">Reference</h2>
 
@@ -120,6 +128,9 @@ configuration:</p>
 
 <h4 id="label-Private+classes">Private classes</h4>
 <ul><li>
+<p><code>linuxmint::config::cinnamon</code>: Handles the configuration of
+cinnamon</p>
+</li><li>
 <p><code>linuxmint::config::software_centre</code>: Handles the configuration
 of software centre</p>
 </li><li>
@@ -128,7 +139,25 @@ of software centre</p>
 
 <h3 id="label-Parameters">Parameters</h3>
 
-<p>None.</p>
+<p>The following parameters are available in the <code>linuxmint</code> class:</p>
+
+<h4 id="label-user"><code>user</code></h4>
+
+<p>Data type: String.</p>
+
+<p>The user to configure. Note this parameter is mandatory and should be
+passed to the class on instantiation.</p>
+
+<p>Default value: &#39;undef&#39;.</p>
+
+<h4 id="label-group"><code>group</code></h4>
+
+<p>Data type: String.</p>
+
+<p>The group associated with the user. Note this parameter is mandatory and
+should be passed to the class on instantiation.</p>
+
+<p>Default value: &#39;undef&#39;.</p>
 
 <h2 id="label-Limitations">Limitations</h2>
 
@@ -183,7 +212,7 @@ documentation.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Thu Nov 23 21:48:42 2017 by
+  Generated on Sat Nov 25 01:15:28 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.8 (ruby-2.4.0).
 </div>
