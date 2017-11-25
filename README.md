@@ -21,19 +21,30 @@ according to my own personal preferences.
 ### What linuxmint affects
 
 * Software centre configuration
+* Cinnamon configuration
 
 ### Beginning with linuxmint
 
 To configure Linux Mint using this module
 
-`include linuxmint`
+```puppet
+class { 'linuxmint':
+  user  => 'auser',
+  group => 'agroup',
+}
+```
 
 ## Usage
 
 The default linuxmint class configures Linux Mint according to
 [What linuxmint affects](#what-linuxmint-affects). To use default configuration:
 
-`include linuxmint`
+```puppet
+class { 'linuxmint':
+  user  => 'auser',
+  group => 'agroup',
+}
+```
 
 ## Reference
 
@@ -45,13 +56,32 @@ The default linuxmint class configures Linux Mint according to
 
 #### Private classes
 
+* `linuxmint::config::cinnamon`: Handles the configuration of cinnamon
 * `linuxmint::config::software_centre`: Handles the configuration of software
 centre
 * `linuxmint::params`: Handles the module default parameters
 
 ### Parameters
 
-None.
+The following parameters are available in the `linuxmint` class:
+
+#### `user`
+
+Data type: String.
+
+The user to configure. Note this parameter is mandatory and should be passed to
+the class on instantiation.
+
+Default value: 'undef'.
+
+#### `group`
+
+Data type: String.
+
+The group associated with the user. Note this parameter is mandatory and should
+be passed to the class on instantiation.
+
+Default value: 'undef'.
 
 ## Limitations
 
