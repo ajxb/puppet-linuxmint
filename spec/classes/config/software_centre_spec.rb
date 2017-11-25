@@ -7,7 +7,7 @@ describe 'linuxmint::config::software_centre' do
         facts
       end
 
-      context 'configure linuxmint with defaults' do
+      context 'configure software centre with defaults' do
         it do
           should contain_file('/etc/apt/sources.list.d/official-package-repositories.list').with(
             ensure: 'file',
