@@ -3,6 +3,8 @@
 # Handles the module default parameters
 #
 class linuxmint::params {
+  $group = undef
+  $user  = undef
 
   case $facts['operatingsystem'] {
     'Ubuntu': {}

@@ -9,7 +9,7 @@ describe 'linuxmint' do
       context 'init with defaults' do
         let :params do
           {
-            user: 'testuser',
+            user:  'testuser',
             group: 'testgroup'
           }
         end

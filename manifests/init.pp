@@ -4,22 +4,22 @@
 #
 # @example Declaring the class
 #   class { 'linuxmint':
-#     user  => 'theuser',
 #     group => 'thegroup',
+#     user  => 'theuser',
 #   }
 #
-# @param [String] user  Mandatory parameter that specifies the user to configure
 # @param [String] group Mandatory parameter that specifies the group for the user param
+# @param [String] user  Mandatory parameter that specifies the user to configure
 class linuxmint (
-  String $user  = undef,
-  String $group = undef,
+  String $group = $linuxmint::params::group,
+  String $user  = $linuxmint::params::user,
 ) inherits linuxmint::params {
-  assert_type(String[1], $user)
   assert_type(String[1], $group)
+  assert_type(String[1], $user)
 
   class { 'linuxmint::config::cinnamon':
-    user  => $user,
     group => $group,
+    user  => $user,
   }
   class { 'linuxmint::config::software_centre': }
 
