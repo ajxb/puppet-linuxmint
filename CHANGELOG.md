@@ -1,3 +1,9 @@
+## 2017-11-26 Release 1.2.0
+### Summary :
+
+* Make cinnamon changes user specific
+* Make software centre changes user specific
+
 ## 2017-11-25 Release 1.1.0
 ### Summary :
 
