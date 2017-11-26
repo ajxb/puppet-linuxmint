@@ -11,10 +11,6 @@ class linuxmint::config::cinnamon (
   assert_type(String[1], $user)
   assert_type(String[1], $group)
 
-  package { 'dconf-tools':
-    ensure => latest,
-  }
-
   # Move the panel to the top of the screen
   gnome::gsettings { 'org.cinnamon_panels-enabled':
     schema => 'org.cinnamon',

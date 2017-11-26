@@ -10,11 +10,10 @@ describe 'linuxmint::config::cinnamon' do
       context 'configure cinnamon with defaults' do
         let :params do
           {
-            user: 'testuser',
-            group: 'testgroup'
+            group: 'testgroup',
+            user:  'testuser'
           }
         end
-        it { should contain_package('dconf-tools').with_ensure('latest') }
         it do
           should contain_gnome__gsettings('org.cinnamon_panels-enabled').with(
             schema: 'org.cinnamon',
