@@ -1,6 +1,6 @@
 fixtures:
   repositories:
-    gnome: 'git://github.com/camptocamp/puppet-gnome.git'
+    gnome: 'git://github.com/ajxb/puppet-gnome.git'
     stdlib: 'git://github.com/puppetlabs/puppetlabs-stdlib.git'
   symlinks:
     linuxmint: "#{source_dir}"
