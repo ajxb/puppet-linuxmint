@@ -6,7 +6,7 @@
 <title>
   Puppet Class: linuxmint::config::software_centre
   
-    &mdash; Documentation by YARD 0.9.8
+    &mdash; Documentation by YARD 0.9.11
   
 </title>
 
@@ -75,6 +75,7 @@
     </dd>
   </dl>
 </div>
+
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
@@ -86,7 +87,29 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>user</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$linuxmint::params::user</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Mandatory parameter that specifies the user to configure</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><div class="method_details_list">
   <table class="source_code">
@@ -95,7 +118,6 @@
         <pre class="lines">
 
 
-5
 6
 7
 8
@@ -199,12 +221,32 @@
 106
 107
 108
-109</pre>
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/config/software_centre.pp', line 5</span>
+        <pre class="code"><span class="info file"># File 'manifests/config/software_centre.pp', line 6</span>
 
-class linuxmint::config::software_centre () inherits linuxmint::params {
+class linuxmint::config::software_centre (
+  String $user  = $linuxmint::params::user,
+) inherits linuxmint::params {
   # Software Centre / Updates configuration
   file { &#39;/etc/apt/sources.list.d/official-package-repositories.list&#39;:
     ensure =&gt; file,
@@ -222,91 +264,106 @@ class linuxmint::config::software_centre () inherits linuxmint::params {
   gnome::gsettings { &#39;com.linuxmint.updates_show-policy-configuration&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;show-policy-configuration&#39;,
-    value  =&gt; &#39;false&#39;,
+    value  =&gt; false,
+    user   =&gt; $user,
   }
 
   gnome::gsettings { &#39;com.linuxmint.updates_level3-is-visible&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;level3-is-visible&#39;,
-    value  =&gt; &#39;true&#39;,
+    value  =&gt; true,
+    user   =&gt; $user,
   }
 
   gnome::gsettings { &#39;com.linuxmint.updates_level4-is-visible&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;level4-is-visible&#39;,
-    value  =&gt; &#39;true&#39;,
+    value  =&gt; true,
+    user   =&gt; $user,
   }
 
   gnome::gsettings { &#39;com.linuxmint.updates_level3-is-safe&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;level3-is-safe&#39;,
-    value  =&gt; &#39;false&#39;,
+    value  =&gt; false,
+    user   =&gt; $user,
   }
 
   gnome::gsettings { &#39;com.linuxmint.updates_level4-is-safe&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;level4-is-safe&#39;,
-    value  =&gt; &#39;false&#39;,
+    value  =&gt; false,
+    user   =&gt; $user,
   }
 
   gnome::gsettings { &#39;com.linuxmint.updates_security-updates-are-safe&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;security-updates-are-safe&#39;,
-    value  =&gt; &#39;true&#39;,
+    value  =&gt; true,
+    user   =&gt; $user,
   }
 
   gnome::gsettings { &#39;com.linuxmint.updates_kernel-updates-are-safe&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;kernel-updates-are-safe&#39;,
-    value  =&gt; &#39;false&#39;,
+    value  =&gt; false,
+    user   =&gt; $user,
   }
 
   gnome::gsettings { &#39;com.linuxmint.updates_level1-is-visible&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;level1-is-visible&#39;,
-    value  =&gt; &#39;true&#39;,
+    value  =&gt; true,
+    user   =&gt; $user,
   }
 
   gnome::gsettings { &#39;com.linuxmint.updates_level2-is-visible&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;level2-is-visible&#39;,
-    value  =&gt; &#39;true&#39;,
+    value  =&gt; true,
+    user   =&gt; $user,
   }
 
   gnome::gsettings { &#39;com.linuxmint.updates_level5-is-visible&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;level5-is-visible&#39;,
-    value  =&gt; &#39;false&#39;,
+    value  =&gt; false,
+    user   =&gt; $user,
   }
 
   gnome::gsettings { &#39;com.linuxmint.updates_level1-is-safe&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;level1-is-safe&#39;,
-    value  =&gt; &#39;true&#39;,
+    value  =&gt; true,
+    user   =&gt; $user,
   }
 
   gnome::gsettings { &#39;com.linuxmint.updates_level2-is-safe&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;level2-is-safe&#39;,
-    value  =&gt; &#39;true&#39;,
+    value  =&gt; true,
+    user   =&gt; $user,
   }
 
   gnome::gsettings { &#39;com.linuxmint.updates_level5-is-safe&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;level5-is-safe&#39;,
-    value  =&gt; &#39;false&#39;,
+    value  =&gt; false,
+    user   =&gt; $user,
   }
 
   gnome::gsettings { &#39;com.linuxmint.updates_security-updates-are-visible&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;security-updates-are-visible&#39;,
-    value  =&gt; &#39;true&#39;,
+    value  =&gt; true,
+    user   =&gt; $user,
   }
 
   gnome::gsettings { &#39;com.linuxmint.updates_kernel-updates-are-visible&#39;:
     schema =&gt; &#39;com.linuxmint.updates&#39;,
     key    =&gt; &#39;kernel-updates-are-visible&#39;,
-    value  =&gt; &#39;true&#39;,
+    value  =&gt; true,
+    user   =&gt; $user,
   }
 }</pre>
       </td>
@@ -316,9 +373,7 @@ class linuxmint::config::software_centre () inherits linuxmint::params {
 </div>
 
       <div id="footer">
-  Generated on Sat Nov 25 01:15:28 2017 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.8 (ruby-2.4.0).
+     Generated by <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>.
 </div>
 
     </div>
