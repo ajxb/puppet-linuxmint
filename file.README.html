@@ -95,7 +95,17 @@ Mint</a> according to my own personal preferences.</p>
 <p>Software centre configuration</p>
 </li><li>
 <p>Cinnamon configuration</p>
+</li><li>
+<p>Mint Welcome configuration</p>
 </li></ul>
+
+<h3 id="label-Dependencies">Dependencies</h3>
+
+<p>This module has a dependency on <a
+href="https://github.com/ajxb/puppet-gnome">puppet-gnome</a> which is not
+available on Puppet Forge so will need to be downloaded and installed using
+your preferred method, e.g. <a
+href="http://librarian-puppet.com/">librarian-puppet</a></p>
 
 <h3 id="label-Beginning+with+linuxmint">Beginning with linuxmint</h3>
 
@@ -130,6 +140,9 @@ configuration:</p>
 <ul><li>
 <p><code>linuxmint::config::cinnamon</code>: Handles the configuration of
 cinnamon</p>
+</li><li>
+<p><code>linuxmint::config::mintwelcome</code>: Handles the configuration of
+mint welcome</p>
 </li><li>
 <p><code>linuxmint::config::software_centre</code>: Handles the configuration
 of software centre</p>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Puppet Class: linuxmint
+  Puppet Class: linuxmint::config::mintwelcome
   
     &mdash; Documentation by YARD 0.9.11
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  pathId = "puppet_classes::linuxmint";
+  pathId = "puppet_classes::linuxmint::config::mintwelcome";
   relpath = '../';
 </script>
 
@@ -39,7 +39,7 @@
     <a href="../_index.html">Index (l)</a> &raquo;
     <span class='title'><span class='object_link'>Puppet Classes</span></span>
      &raquo; 
-    <span class="title">linuxmint</span>
+    <span class="title">linuxmint::config::mintwelcome</span>
   
 </div>
 
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Puppet Class: linuxmint</h1>
+      <div id="content"><h1>Puppet Class: linuxmint::config::mintwelcome</h1>
 <div class="box_info">
   
   <dl>
@@ -71,7 +71,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>
-      manifests/init.pp
+      manifests/config/mintwelcome.pp
     </dd>
   </dl>
 </div>
@@ -80,29 +80,14 @@
 <div class="docstring">
   <div class="discussion">
     
-<p>Class: linuxmint</p>
+<p>linuxmint::config::mintwelcome</p>
 
-<p>Manage configuration of Linux Mint</p>
+<p>Configures Linux Mint Mint Welcome tool</p>
 
   </div>
 </div>
 <div class="tags">
-  
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
-      
-        <p class="example_title"><div class='inline'>
-<p>Declaring the class</p>
-</div></p>
-      
-      <pre class="example code"><code>class { &#39;linuxmint&#39;:
-  group =&gt; &#39;thegroup&#39;,
-  user  =&gt; &#39;theuser&#39;,
-}</code></pre>
-    
-  </div>
-<p class="tag_title">Parameters:</p>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -151,6 +136,12 @@
         <pre class="lines">
 
 
+7
+8
+9
+10
+11
+12
 13
 14
 15
@@ -173,33 +164,53 @@
 32
 33
 34
-35</pre>
+35
+36
+37
+38
+39
+40
+41
+42</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 13</span>
+        <pre class="code"><span class="info file"># File 'manifests/config/mintwelcome.pp', line 7</span>
 
-class linuxmint (
+class linuxmint::config::mintwelcome (
   String $group = $linuxmint::params::group,
   String $user  = $linuxmint::params::user,
 ) inherits linuxmint::params {
-  assert_type(String[1], $group)
   assert_type(String[1], $user)
+  assert_type(String[1], $group)
 
-  class { &#39;linuxmint::config::cinnamon&#39;:
-    group =&gt; $group,
-    user  =&gt; $user,
-  }
-  class { &#39;linuxmint::config::mintwelcome&#39;:
-    group =&gt; $group,
-    user  =&gt; $user,
-  }
-  class { &#39;linuxmint::config::software_centre&#39;:
-    user =&gt; $user,
+  $dirs = [
+    &quot;/home/${user}/.linuxmint&quot;,
+    &quot;/home/${user}/.linuxmint/mintwelcome&quot;,
+   ]
+
+  file { $dirs:
+    ensure =&gt; &#39;directory&#39;,
+    owner  =&gt; $user,
+    group  =&gt; $group,
+    mode   =&gt; &#39;0700&#39;,
+    require =&gt; [
+      User[$user],
+      Group[$group],
+    ],
   }
 
-  contain linuxmint::config::cinnamon
-  contain linuxmint::config::mintwelcome
-  contain linuxmint::config::software_centre
+  file { &quot;/home/${user}/.linuxmint/mintwelcome/norun.flag&quot;:
+    ensure  =&gt; &#39;file&#39;,
+    content =&gt; &#39;&#39;,
+    owner   =&gt; $user,
+    group   =&gt; $group,
+    mode    =&gt; &#39;0700&#39;,
+    require =&gt; [
+      User[$user],
+      Group[$group],
+      File[&quot;/home/${user}/.linuxmint/mintwelcome&quot;],
+    ],
+  }
 }</pre>
       </td>
     </tr>
