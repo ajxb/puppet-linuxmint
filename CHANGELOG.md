@@ -1,3 +1,8 @@
+## 2017-11-26 Release 1.3.0
+### Summary :
+
+* Add mintwelcome configuration module
+
 ## 2017-11-26 Release 1.2.0
 ### Summary :
 
@@ -7,7 +12,8 @@
 ## 2017-11-25 Release 1.1.0
 ### Summary :
 
-This is a breaking change, new mandatory parameters user and group have been added to the linuxmint class.
+This is a breaking change, new mandatory parameters user and group have been
+added to the linuxmint class.
 
 * Add cinnamon configuration module
 

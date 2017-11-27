@@ -22,6 +22,14 @@ according to my own personal preferences.
 
 * Software centre configuration
 * Cinnamon configuration
+* Mint Welcome configuration
+
+### Dependencies
+
+This module has a dependency on
+[puppet-gnome](https://github.com/ajxb/puppet-gnome) which is not available on
+Puppet Forge so will need to be downloaded and installed using your preferred
+method, e.g. [librarian-puppet](http://librarian-puppet.com/)
 
 ### Beginning with linuxmint
 
@@ -57,6 +65,7 @@ class { 'linuxmint':
 #### Private classes
 
 * `linuxmint::config::cinnamon`: Handles the configuration of cinnamon
+* `linuxmint::config::mintwelcome`: Handles the configuration of mint welcome
 * `linuxmint::config::software_centre`: Handles the configuration of software
 centre
 * `linuxmint::params`: Handles the module default parameters
@@ -92,17 +101,24 @@ specific to Linux Mint only.
 
 ### Contributing
 
-Before starting your work on this module, you should fork the project to your GitHub account. This allows you to freely experiment with your changes. When your changes are complete, submit a pull request. All pull requests will be reviewed and merged if they suit some general guidelines:
+Before starting your work on this module, you should fork the project to your
+GitHub account. This allows you to freely experiment with your changes. When
+your changes are complete, submit a pull request. All pull requests will be
+reviewed and merged if they suit some general guidelines:
 
 * Changes are located in a topic branch
 * For new functionality, proper tests are written
-* Your change does not handle third party software for which dedicated Puppet modules exist
-such as creating databases, installing webserver etc.
-* Changes follow the recommended Puppet style guidelines from the [Puppet Language Style Guide](https://docs.puppet.com/puppet/latest/style_guide.html)
+* Your change does not handle third party software for which dedicated Puppet
+modules exist such as creating databases, installing webserver etc.
+* Changes follow the recommended Puppet style guidelines from the
+[Puppet Language Style Guide](https://docs.puppet.com/puppet/latest/style_guide.html)
 
 ### Branches
 
-Choosing a proper name for a branch helps us identify its purpose and possibly find an associated bug or feature. Generally a branch name should include a topic such as `bug` or `feature` followed by a description and an issue number if applicable. Branches should have only changes relevant to a specific issue.
+Choosing a proper name for a branch helps us identify its purpose and possibly
+find an associated bug or feature. Generally a branch name should include a
+topic such as `bug` or `feature` followed by a description and an issue number
+if applicable. Branches should have only changes relevant to a specific issue.
 
 ```
 git checkout -b bug/service-template-typo-1234
@@ -111,7 +127,9 @@ git checkout -b feature/config-handling-1235
 
 ### Running tests
 
-This project contains tests for [rspec-puppet](http://rspec-puppet.com/) to verify functionality. For detailed information on using this tool, please see the relevant documentation.
+This project contains tests for [rspec-puppet](http://rspec-puppet.com/) to
+verify functionality. For detailed information on using this tool, please see
+the relevant documentation.
 
 #### Testing quickstart
 
