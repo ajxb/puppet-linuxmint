@@ -20,13 +20,24 @@ class linuxmint (
   class { 'linuxmint::config::cinnamon':
     group => $group,
     user  => $user,
+    require => [
+      User[$user],
+      Group[$group],
+    ],
   }
   class { 'linuxmint::config::mintwelcome':
     group => $group,
     user  => $user,
+    require => [
+      User[$user],
+      Group[$group],
+    ],
   }
   class { 'linuxmint::config::software_centre':
     user => $user,
+    require => [
+      User[$user],
+    ],
   }
 
   contain linuxmint::config::cinnamon

@@ -21,10 +21,6 @@ class linuxmint::config::mintwelcome (
     owner  => $user,
     group  => $group,
     mode   => '0700',
-    require => [
-      User[$user],
-      Group[$group],
-    ],
   }
 
   file { "/home/${user}/.linuxmint/mintwelcome/norun.flag":
@@ -34,8 +30,6 @@ class linuxmint::config::mintwelcome (
     group   => $group,
     mode    => '0700',
     require => [
-      User[$user],
-      Group[$group],
       File["/home/${user}/.linuxmint/mintwelcome"],
     ],
   }

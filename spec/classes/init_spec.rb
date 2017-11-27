@@ -23,7 +23,13 @@ describe 'linuxmint' do
         it { should compile.with_all_deps }
         it { should contain_class('linuxmint') }
         it { should contain_class('linuxmint::config::cinnamon') }
+        it { should contain_class('linuxmint::config::cinnamon').that_requires('User[testuser]') }
+        it { should contain_class('linuxmint::config::cinnamon').that_requires('Group[testgroup]') }
+        it { should contain_class('linuxmint::config::mintwelcome') }
+        it { should contain_class('linuxmint::config::mintwelcome').that_requires('User[testuser]') }
+        it { should contain_class('linuxmint::config::mintwelcome').that_requires('Group[testgroup]') }
         it { should contain_class('linuxmint::config::software_centre') }
+        it { should contain_class('linuxmint::config::software_centre').that_requires('User[testuser]') }
         it { should contain_class('linuxmint::params') }
       end
       context 'user param not set' do

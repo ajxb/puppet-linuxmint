@@ -14,15 +14,7 @@ describe 'linuxmint::config::mintwelcome' do
             user:  'testuser'
           }
         end
-        let :pre_condition do
-          [
-            'user  { "testuser":  ensure => present }',
-            'group { "testgroup": ensure => present }'
-          ]
-        end
 
-        it { should contain_file('/home/testuser/.linuxmint').that_requires('User[testuser]') }
-        it { should contain_file('/home/testuser/.linuxmint').that_requires('Group[testgroup]') }
         it do
           should contain_file('/home/testuser/.linuxmint').with(
             ensure: 'directory',
@@ -32,8 +24,6 @@ describe 'linuxmint::config::mintwelcome' do
           )
         end
 
-        it { should contain_file('/home/testuser/.linuxmint/mintwelcome/norun.flag').that_requires('User[testuser]') }
-        it { should contain_file('/home/testuser/.linuxmint/mintwelcome/norun.flag').that_requires('Group[testgroup]') }
         it { should contain_file('/home/testuser/.linuxmint/mintwelcome/norun.flag').that_requires('File[/home/testuser/.linuxmint/mintwelcome]') }
         it do
           should contain_file('/home/testuser/.linuxmint/mintwelcome/norun.flag').with(
