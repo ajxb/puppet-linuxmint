@@ -18,23 +18,23 @@ class linuxmint (
   assert_type(String[1], $user)
 
   class { 'linuxmint::config::cinnamon':
-    group => $group,
-    user  => $user,
+    group   => $group,
+    user    => $user,
     require => [
       User[$user],
       Group[$group],
     ],
   }
   class { 'linuxmint::config::mintwelcome':
-    group => $group,
-    user  => $user,
+    group   => $group,
+    user    => $user,
     require => [
       User[$user],
       Group[$group],
     ],
   }
   class { 'linuxmint::config::software_centre':
-    user => $user,
+    user    => $user,
     require => [
       User[$user],
     ],

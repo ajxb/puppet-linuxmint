@@ -14,7 +14,7 @@ class linuxmint::config::mintwelcome (
   $dirs = [
     "/home/${user}/.linuxmint",
     "/home/${user}/.linuxmint/mintwelcome",
-   ]
+  ]
 
   file { $dirs:
     ensure => 'directory',
