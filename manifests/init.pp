@@ -21,10 +21,15 @@ class linuxmint (
     group => $group,
     user  => $user,
   }
+  class { 'linuxmint::config::mintwelcome':
+    group => $group,
+    user  => $user,
+  }
   class { 'linuxmint::config::software_centre':
     user => $user,
   }
 
   contain linuxmint::config::cinnamon
+  contain linuxmint::config::mintwelcome
   contain linuxmint::config::software_centre
 }

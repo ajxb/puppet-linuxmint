@@ -13,6 +13,12 @@ describe 'linuxmint' do
             group: 'testgroup'
           }
         end
+        let :pre_condition do
+          [
+            'user  { "testuser":  ensure => present }',
+            'group { "testgroup": ensure => present }'
+          ]
+        end
 
         it { should compile.with_all_deps }
         it { should contain_class('linuxmint') }
