@@ -1,4 +1,9 @@
-## 2017-11-26 Release 1.3.0
+## 2017-11-27 Release 1.3.1
+### Summary :
+
+* Move require clauses to init class
+
+## 2017-11-27 Release 1.3.0
 ### Summary :
 
 * Add mintwelcome configuration module
