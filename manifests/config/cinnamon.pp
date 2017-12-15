@@ -39,7 +39,9 @@ class linuxmint::config::cinnamon (
     owner  => 'root',
   }
 
-  # Clone cinnamon-spices-applets theme
+  #############################################################################
+  # Install applets
+  #############################################################################
   vcsrepo { "${packages_root}/cinnamon-spices-applets":
     ensure   => present,
     provider => git,
@@ -79,18 +81,12 @@ class linuxmint::config::cinnamon (
     ]
   }
 
-  $cinnamon_config_folders = [
+  #############################################################################
+  # Configure applets
+  #############################################################################
+ $cinnamon_config_folders = [
     "/home/${user}/.cinnamon",
     "/home/${user}/.cinnamon/configs",
-    "/home/${user}/.cinnamon/configs/betterlock",
-    "/home/${user}/.cinnamon/configs/calendar@cinnamon.org",
-    "/home/${user}/.cinnamon/configs/menu@cinnamon",
-    "/home/${user}/.cinnamon/configs/notifications@cinnamon",
-    "/home/${user}/.cinnamon/configs/power@cinnamon",
-    "/home/${user}/.cinnamon/configs/show-desktop@cinnamon",
-    "/home/${user}/.cinnamon/configs/sound@cinnamon",
-    "/home/${user}/.cinnamon/configs/user@cinnamon",
-    "/home/${user}/.cinnamon/configs/workspace-grid@hernejj",
   ]
 
   file { $cinnamon_config_folders:
@@ -100,93 +96,34 @@ class linuxmint::config::cinnamon (
     mode   => '0775',
   }
 
-  # Configure betterlock applet
-  file { "/home/${user}/.cinnamon/configs/betterlock/betterlock.json":
-    ensure => file,
-    source => 'puppet:///modules/linuxmint/cinnamon/betterlock/betterlock.json',
-    owner  => $user,
-    group  => $group,
-    mode   => '0664',
-    require => File[$cinnamon_config_folders],
+  $applets = {
+    'betterlock'                 => 'betterlock.json',
+    'calendar@cinnamon.org'      => '12.json',
+    'menu@cinnamon.org'          => '1.json',
+    'notifications@cinnamon.org' => 'notifications@cinnamon.org.json',
+    'power@cinnamon.org'         => 'power@cinnamon.org.json',
+    'show-desktop@cinnamon.org'  => '2.json',
+    'sound@cinnamon.org'         => 'sound@cinnamon.org.json',
+    'user@cinnamon.org'          => '8.json',
+    'workspace-grid@hernejj'     => 'workspace-grid@hernejj.json',
   }
 
-  # Configure cinnamon calendar applet
-  file { "/home/${user}/.cinnamon/configs/calendar@cinnamon.org/12.json":
-    ensure => file,
-    source => 'puppet:///modules/linuxmint/cinnamon/calendar@cinnamon.org/12.json',
-    owner  => $user,
-    group  => $group,
-    mode   => '0664',
-    require => File[$cinnamon_config_folders],
-  }
+  $applets.each |$key, $value| {
+    file { "/home/${user}/.cinnamon/configs/${key}":
+      ensure  => directory,
+      owner   => $user,
+      group   => $group,
+      mode    => '0775',
+      require => File[$cinnamon_config_folders],
+    }
 
-  # Configure cinnamon menu applet
-  file { "/home/${user}/.cinnamon/configs/menu@cinnamon.org/1.json":
-    ensure => file,
-    source => 'puppet:///modules/linuxmint/cinnamon/menu@cinnamon.org/1.json',
-    owner  => $user,
-    group  => $group,
-    mode   => '0664',
-    require => File[$cinnamon_config_folders],
-  }
-
-  # Configure cinnamon notifications applet
-  file { "/home/${user}/.cinnamon/configs/notifications@cinnamon.org/notifications@cinnamon.org.json":
-    ensure => file,
-    source => 'puppet:///modules/linuxmint/cinnamon/notifications@cinnamon.org/notifications@cinnamon.org.json',
-    owner  => $user,
-    group  => $group,
-    mode   => '0664',
-    require => File[$cinnamon_config_folders],
-  }
-
-  # Configure cinnamon power applet
-  file { "/home/${user}/.cinnamon/configs/power@cinnamon.org/power@cinnamon.org.json":
-    ensure => file,
-    source => 'puppet:///modules/linuxmint/cinnamon/power@cinnamon.org/power@cinnamon.org.json',
-    owner  => $user,
-    group  => $group,
-    mode   => '0664',
-    require => File[$cinnamon_config_folders],
-  }
-
-  # Configure cinnamon show-desktop applet
-  file { "/home/${user}/.cinnamon/configs/show-desktop@cinnamon.org/2.json":
-    ensure => file,
-    source => 'puppet:///modules/linuxmint/cinnamon/show-desktop@cinnamon.org/2.json',
-    owner  => $user,
-    group  => $group,
-    mode   => '0664',
-    require => File[$cinnamon_config_folders],
-  }
-
-  # Configure cinnamon sound applet
-  file { "/home/${user}/.cinnamon/configs/sound@cinnamon.org/sound@cinnamon.org.json":
-    ensure => file,
-    source => 'puppet:///modules/linuxmint/cinnamon/sound@cinnamon.org/sound@cinnamon.org.json',
-    owner  => $user,
-    group  => $group,
-    mode   => '0664',
-    require => File[$cinnamon_config_folders],
-  }
-
-  # Configure cinnamon user applet
-  file { "/home/${user}/.cinnamon/configs/user@cinnamon.org/8.json":
-    ensure => file,
-    source => 'puppet:///modules/linuxmint/cinnamon/user@cinnamon.org/8.json',
-    owner  => $user,
-    group  => $group,
-    mode   => '0664',
-    require => File[$cinnamon_config_folders],
-  }
-
-  # Configure cinnamon workspace-grid applet
-  file { "/home/${user}/.cinnamon/configs/workspace-grid@hernejj/workspace-grid@hernejj.json":
-    ensure => file,
-    source => 'puppet:///modules/linuxmint/cinnamon/workspace-grid@hernejj/workspace-grid@hernejj.json',
-    owner  => $user,
-    group  => $group,
-    mode   => '0664',
-    require => File[$cinnamon_config_folders],
+    file { "/home/${user}/.cinnamon/configs/${key}/${value}":
+      ensure => file,
+      source => "puppet:///modules/linuxmint/cinnamon/${key}/${value}",
+      owner  => $user,
+      group  => $group,
+      mode   => '0664',
+      require => File["/home/${user}/.cinnamon/configs/${key}"],
+    }
   }
 }
