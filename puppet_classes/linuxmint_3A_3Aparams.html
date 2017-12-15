@@ -6,7 +6,7 @@
 <title>
   Puppet Class: linuxmint::params
   
-    &mdash; Documentation by YARD 0.9.11
+    &mdash; Documentation by YARD 0.9.12
   
 </title>
 
@@ -69,7 +69,11 @@
       
       <span class='object_link'><a href="linuxmint.html" title="puppet_classes::linuxmint (puppet_class)">linuxmint</a></span><br/>
       
+      <span class='object_link'><a href="linuxmint_3A_3Aconfig_3A_3Aapplets.html" title="puppet_classes::linuxmint::config::applets (puppet_class)">linuxmint::config::applets</a></span><br/>
+      
       <span class='object_link'><a href="linuxmint_3A_3Aconfig_3A_3Acinnamon.html" title="puppet_classes::linuxmint::config::cinnamon (puppet_class)">linuxmint::config::cinnamon</a></span><br/>
+      
+      <span class='object_link'><a href="linuxmint_3A_3Ainstall_3A_3Aapplets.html" title="puppet_classes::linuxmint::install::applets (puppet_class)">linuxmint::install::applets</a></span><br/>
       
       <span class='object_link'><a href="linuxmint_3A_3Aconfig_3A_3Amintwelcome.html" title="puppet_classes::linuxmint::config::mintwelcome (puppet_class)">linuxmint::config::mintwelcome</a></span><br/>
       
@@ -116,7 +120,8 @@
 12
 13
 14
-15</pre>
+15
+16</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/params.pp', line 5</span>
@@ -124,6 +129,7 @@
 class linuxmint::params {
   $group = undef
   $user  = undef
+  $packages_root = &#39;/opt/packages_puppet-linuxmint&#39;
 
   case $facts[&#39;operatingsystem&#39;] {
     &#39;Ubuntu&#39;: {}

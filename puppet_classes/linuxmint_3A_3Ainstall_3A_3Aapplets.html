@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Puppet Class: linuxmint::config::cinnamon
+  Puppet Class: linuxmint::install::applets
   
     &mdash; Documentation by YARD 0.9.12
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  pathId = "puppet_classes::linuxmint::config::cinnamon";
+  pathId = "puppet_classes::linuxmint::install::applets";
   relpath = '../';
 </script>
 
@@ -39,7 +39,7 @@
     <a href="../_index.html">Index (l)</a> &raquo;
     <span class='title'><span class='object_link'>Puppet Classes</span></span>
      &raquo; 
-    <span class="title">linuxmint::config::cinnamon</span>
+    <span class="title">linuxmint::install::applets</span>
   
 </div>
 
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Puppet Class: linuxmint::config::cinnamon</h1>
+      <div id="content"><h1>Puppet Class: linuxmint::install::applets</h1>
 <div class="box_info">
   
   <dl>
@@ -71,7 +71,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>
-      manifests/config/cinnamon.pp
+      manifests/install/applets.pp
     </dd>
   </dl>
 </div>
@@ -80,15 +80,33 @@
 <div class="docstring">
   <div class="discussion">
     
-<p>linuxmint::config::cinnamon</p>
+<p>linuxmint::install::applets</p>
 
-<p>Configures Linux Mint Cinnamon desktop</p>
+<p>Install Linux Mint Cinnamon applets</p>
 
   </div>
 </div>
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
+  
+    <li>
+      
+        <span class='name'>group</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$linuxmint::params::group</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Mandatory parameter that specifies the group for the user param</p>
+</div>
+      
+    </li>
   
     <li>
       
@@ -118,7 +136,6 @@
         <pre class="lines">
 
 
-6
 7
 8
 9
@@ -130,22 +147,83 @@
 15
 16
 17
-18</pre>
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/config/cinnamon.pp', line 6</span>
+        <pre class="code"><span class="info file"># File 'manifests/install/applets.pp', line 7</span>
 
-class linuxmint::config::cinnamon (
+class linuxmint::install::applets (
+  String $group = $linuxmint::params::group,
   String $user  = $linuxmint::params::user,
 ) inherits linuxmint::params {
   assert_type(String[1], $user)
+  assert_type(String[1], $group)
 
-  # Move the panel to the top of the screen
-  gnome::gsettings { &#39;org.cinnamon_panels-enabled&#39;:
-    schema =&gt; &#39;org.cinnamon&#39;,
-    key    =&gt; &#39;panels-enabled&#39;,
-    value  =&gt; &#39;&quot;[\&#39;1:0:top\&#39;]&quot;&#39;,
-    user   =&gt; $user,
+  file { &quot;/home/${user}/.local/share/cinnamon/applets&quot;:
+    ensure =&gt; &#39;directory&#39;,
+    owner  =&gt; $user,
+    group  =&gt; $group,
+    mode   =&gt; &#39;0775&#39;,
+  }
+
+  vcsrepo { &quot;${linuxmint::params::packages_root}/cinnamon-spices-applets&quot;:
+    ensure   =&gt; present,
+    provider =&gt; git,
+    source   =&gt; &#39;https://github.com/linuxmint/cinnamon-spices-applets.git&#39;,
+    require  =&gt; File[$linuxmint::params::packages_root],
+  }
+
+  file { &quot;/home/${user}/.local/share/cinnamon/applets/betterlock&quot;:
+    ensure    =&gt; &#39;directory&#39;,
+    group     =&gt; $group,
+    mode      =&gt; &#39;0700&#39;,
+    owner     =&gt; $user,
+    recurse   =&gt; true,
+    source    =&gt; &quot;file://${linuxmint::params::packages_root}/cinnamon-spices-applets/betterlock/files/betterlock&quot;,
+    require   =&gt; File[&quot;/home/${user}/.local/share/cinnamon/applets&quot;],
+    subscribe =&gt; Vcsrepo[&quot;${linuxmint::params::packages_root}/cinnamon-spices-applets&quot;],
+  }
+
+  file { &quot;/home/${user}/.local/share/cinnamon/applets/workspace-grid@hernejj&quot;:
+    ensure    =&gt; &#39;directory&#39;,
+    group     =&gt; $group,
+    mode      =&gt; &#39;0700&#39;,
+    owner     =&gt; $user,
+    recurse   =&gt; true,
+    source    =&gt; &quot;file://${linuxmint::params::packages_root}/cinnamon-spices-applets/workspace-grid@hernejj/files/workspace-grid@hernejj&quot;,
+    require   =&gt; File[&quot;/home/${user}/.local/share/cinnamon/applets&quot;],
+    subscribe =&gt; Vcsrepo[&quot;${linuxmint::params::packages_root}/cinnamon-spices-applets&quot;],
   }
 }</pre>
       </td>

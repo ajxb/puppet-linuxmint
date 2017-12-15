@@ -6,7 +6,7 @@
 <title>
   Puppet Class: linuxmint
   
-    &mdash; Documentation by YARD 0.9.11
+    &mdash; Documentation by YARD 0.9.12
   
 </title>
 
@@ -173,7 +173,65 @@
 32
 33
 34
-35</pre>
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/init.pp', line 13</span>
@@ -185,21 +243,79 @@ class linuxmint (
   assert_type(String[1], $group)
   assert_type(String[1], $user)
 
-  class { &#39;linuxmint::config::cinnamon&#39;:
-    group =&gt; $group,
-    user  =&gt; $user,
-  }
-  class { &#39;linuxmint::config::mintwelcome&#39;:
-    group =&gt; $group,
-    user  =&gt; $user,
-  }
-  class { &#39;linuxmint::config::software_centre&#39;:
-    user =&gt; $user,
+  #############################################################################
+  # Create common folders
+  #############################################################################
+  file { &quot;/home/${user}/.local/share/cinnamon&quot;:
+    ensure  =&gt; directory,
+    owner   =&gt; $user,
+    group   =&gt; $group,
+    mode    =&gt; &#39;0775&#39;,
+    require =&gt; [
+      User[$user],
+      Group[$group],
+    ],
   }
 
+  file { $linuxmint::params::packages_root:
+    ensure =&gt; &#39;directory&#39;,
+    group  =&gt; &#39;root&#39;,
+    mode   =&gt; &#39;0755&#39;,
+    owner  =&gt; &#39;root&#39;,
+  }
+
+  #############################################################################
+  # Instatiate classes
+  #############################################################################
+  class { &#39;linuxmint::install::applets&#39;:
+    group   =&gt; $group,
+    user    =&gt; $user,
+    require =&gt; [
+      User[$user],
+      Group[$group],
+    ],
+  }
+
+  class { &#39;linuxmint::config::applets&#39;:
+    group   =&gt; $group,
+    user    =&gt; $user,
+    require =&gt; [
+      User[$user],
+      Group[$group],
+    ],
+  }
+
+  class { &#39;linuxmint::config::cinnamon&#39;:
+    user    =&gt; $user,
+    require =&gt; [
+      User[$user],
+    ],
+  }
+
+  class { &#39;linuxmint::config::mintwelcome&#39;:
+    group   =&gt; $group,
+    user    =&gt; $user,
+    require =&gt; [
+      User[$user],
+      Group[$group],
+    ],
+  }
+
+  class { &#39;linuxmint::config::software_centre&#39;:
+    user    =&gt; $user,
+    require =&gt; [
+      User[$user],
+    ],
+  }
+
+  contain linuxmint::install::applets
+  contain linuxmint::config::applets
   contain linuxmint::config::cinnamon
   contain linuxmint::config::mintwelcome
   contain linuxmint::config::software_centre
+
+  Class[&#39;linuxmint::install::applets&#39;]
+  -&gt; Class[&#39;linuxmint::config::applets&#39;]
 }</pre>
       </td>
     </tr>
