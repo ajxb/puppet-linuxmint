@@ -2,7 +2,6 @@
 #
 # Configures Linux Mint Cinnamon desktop
 #
-# @param [String] group Mandatory parameter that specifies the group for the user param
 # @param [String] user  Mandatory parameter that specifies the user to configure
 class linuxmint::config::cinnamon (
   String $user  = $linuxmint::params::user,
