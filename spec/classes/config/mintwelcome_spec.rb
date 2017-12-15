@@ -15,13 +15,20 @@ describe 'linuxmint::config::mintwelcome' do
           }
         end
 
-        it do
-          should contain_file('/home/testuser/.linuxmint').with(
-            ensure: 'directory',
-            owner:  'testuser',
-            group:  'testgroup',
-            mode:   '0700'
-          )
+        dirs = %w[
+          /home/testuser/.linuxmint
+          /home/testuser/.linuxmint/mintwelcome
+        ]
+
+        dirs.each do |dir|
+          it do
+            should contain_file(dir).with(
+              ensure: 'directory',
+              owner:  'testuser',
+              group:  'testgroup',
+              mode:   '0700'
+            )
+          end
         end
 
         it { should contain_file('/home/testuser/.linuxmint/mintwelcome/norun.flag').that_requires('File[/home/testuser/.linuxmint/mintwelcome]') }
