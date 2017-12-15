@@ -38,7 +38,6 @@ describe 'linuxmint::install::applets' do
         end
         it { should contain_vcsrepo('/opt/packages_puppet-linuxmint/cinnamon-spices-applets').that_requires('File[/opt/packages_puppet-linuxmint]') }
 
-
         it do
           should contain_file('/home/testuser/.local/share/cinnamon/applets/betterlock').with(
             ensure: 'directory',

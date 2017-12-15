@@ -21,10 +21,10 @@ class linuxmint (
   # Create common folders
   #############################################################################
   file { "/home/${user}/.local/share/cinnamon":
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
-    mode   => '0775',
+    ensure  => directory,
+    owner   => $user,
+    group   => $group,
+    mode    => '0775',
     require => [
       User[$user],
       Group[$group],

@@ -57,7 +57,7 @@ describe 'linuxmint::config::applets' do
           'show-desktop@cinnamon.org'  => '2.json',
           'sound@cinnamon.org'         => 'sound@cinnamon.org.json',
           'user@cinnamon.org'          => '8.json',
-          'workspace-grid@hernejj'     => 'workspace-grid@hernejj.json',
+          'workspace-grid@hernejj'     => 'workspace-grid@hernejj.json'
         }
 
         applets.each do |key, value|
@@ -70,7 +70,7 @@ describe 'linuxmint::config::applets' do
             )
           end
           cinnamon_config_folders.each do |folder|
-            it { should contain_file("/home/testuser/.cinnamon/configs/#{key}").that_requires("File[#{folder}]")}
+            it { should contain_file("/home/testuser/.cinnamon/configs/#{key}").that_requires("File[#{folder}]") }
           end
 
           it do
@@ -82,7 +82,7 @@ describe 'linuxmint::config::applets' do
               mode:   '0664'
             )
           end
-          it { should contain_file("/home/testuser/.cinnamon/configs/#{key}/#{value}").that_requires("File[/home/testuser/.cinnamon/configs/#{key}]")}
+          it { should contain_file("/home/testuser/.cinnamon/configs/#{key}/#{value}").that_requires("File[/home/testuser/.cinnamon/configs/#{key}]") }
         end
       end
       context 'user param not set' do

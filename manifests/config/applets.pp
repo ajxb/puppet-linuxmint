@@ -60,11 +60,11 @@ class linuxmint::config::applets (
     }
 
     file { "/home/${user}/.cinnamon/configs/${key}/${value}":
-      ensure => file,
-      source => "puppet:///modules/linuxmint/applets/${key}/${value}",
-      owner  => $user,
-      group  => $group,
-      mode   => '0664',
+      ensure  => file,
+      source  => "puppet:///modules/linuxmint/applets/${key}/${value}",
+      owner   => $user,
+      group   => $group,
+      mode    => '0664',
       require => File["/home/${user}/.cinnamon/configs/${key}"],
     }
   }
