@@ -12,7 +12,7 @@ class linuxmint::install::applets (
   assert_type(String[1], $group)
 
   file { "/home/${user}/.local/share/cinnamon/applets":
-    ensure => directory,
+    ensure => 'directory',
     owner  => $user,
     group  => $group,
     mode   => '0775',
