@@ -14,6 +14,12 @@ describe 'linuxmint::config::cinnamon' do
             user:  'testuser'
           }
         end
+        let :pre_condition do
+          [
+            'file { "/home/testuser/.local/share/cinnamon/applets/betterlock": ensure => present }',
+            'file { "/home/testuser/.local/share/cinnamon/applets/workspace-grid@hernejj": ensure => present }'
+          ]
+        end
         it do
           should contain_gnome__gsettings('org.cinnamon_panels-enabled').with(
             schema: 'org.cinnamon',

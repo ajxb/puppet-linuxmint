@@ -19,56 +19,6 @@ class linuxmint::config::cinnamon (
     user   => $user,
   }
 
-  $cinnamon_applet_folders = [
-    "/home/${user}/.local/share/cinnamon",
-    "/home/${user}/.local/share/cinnamon/applets",
-  ]
-
-  file { $cinnamon_applet_folders:
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
-    mode   => '0775',
-  }
-
-  $packages_root = '/opt/packages_puppet-linuxmint'
-  file { $packages_root:
-    ensure => 'directory',
-    group  => 'root',
-    mode   => '0755',
-    owner  => 'root',
-  }
-
-  #############################################################################
-  # Install applets
-  #############################################################################
-  vcsrepo { "${packages_root}/cinnamon-spices-applets":
-    ensure   => present,
-    provider => git,
-    source   => 'https://github.com/linuxmint/cinnamon-spices-applets.git',
-    require  => File[$packages_root],
-  }
-
-  file { "/home/${user}/.local/share/cinnamon/applets/betterlock":
-    ensure    => 'directory',
-    group     => $group,
-    mode      => '0700',
-    owner     => $user,
-    recurse   => true,
-    source    => "file://${packages_root}/cinnamon-spices-applets/betterlock/files/betterlock",
-    subscribe => Vcsrepo["${packages_root}/cinnamon-spices-applets"],
-  }
-
-  file { "/home/${user}/.local/share/cinnamon/applets/workspace-grid@hernejj":
-    ensure    => 'directory',
-    group     => $group,
-    mode      => '0700',
-    owner     => $user,
-    recurse   => true,
-    source    => "file://${packages_root}/cinnamon-spices-applets/workspace-grid@hernejj/files/workspace-grid@hernejj",
-    subscribe => Vcsrepo["${packages_root}/cinnamon-spices-applets"],
-  }
-
   # Configure panel applets
   gnome::gsettings { 'org.cinnamon_enabled-applets':
     schema  => 'org.cinnamon',
@@ -84,7 +34,7 @@ class linuxmint::config::cinnamon (
   #############################################################################
   # Configure applets
   #############################################################################
- $cinnamon_config_folders = [
+  $cinnamon_config_folders = [
     "/home/${user}/.cinnamon",
     "/home/${user}/.cinnamon/configs",
   ]

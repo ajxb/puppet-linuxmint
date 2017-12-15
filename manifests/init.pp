@@ -17,6 +17,35 @@ class linuxmint (
   assert_type(String[1], $group)
   assert_type(String[1], $user)
 
+  #############################################################################
+  # Create common folders
+  #############################################################################
+  file { "/home/${user}/.local/share/cinnamon":
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
+    mode   => '0775',
+  }
+
+  file { $linuxmint::params::packages_root:
+    ensure => 'directory',
+    group  => 'root',
+    mode   => '0755',
+    owner  => 'root',
+  }
+
+  #############################################################################
+  # Instatiate classes
+  #############################################################################
+  class { 'linuxmint::install::applets':
+    group   => $group,
+    user    => $user,
+    require => [
+      User[$user],
+      Group[$group],
+    ],
+  }
+
   class { 'linuxmint::config::cinnamon':
     group   => $group,
     user    => $user,
@@ -25,6 +54,7 @@ class linuxmint (
       Group[$group],
     ],
   }
+
   class { 'linuxmint::config::mintwelcome':
     group   => $group,
     user    => $user,
@@ -33,6 +63,7 @@ class linuxmint (
       Group[$group],
     ],
   }
+
   class { 'linuxmint::config::software_centre':
     user    => $user,
     require => [
@@ -40,7 +71,11 @@ class linuxmint (
     ],
   }
 
+  contain linuxmint::install::applets
   contain linuxmint::config::cinnamon
   contain linuxmint::config::mintwelcome
   contain linuxmint::config::software_centre
+
+  Class['linuxmint::install::applets']
+  -> Class['linuxmint::config::cinnamon']
 }
