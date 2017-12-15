@@ -24,7 +24,6 @@ describe 'linuxmint' do
         it { should contain_class('linuxmint') }
         it { should contain_class('linuxmint::config::cinnamon') }
         it { should contain_class('linuxmint::config::cinnamon').that_requires('User[testuser]') }
-        it { should contain_class('linuxmint::config::cinnamon').that_requires('Group[testgroup]') }
         it { should contain_class('linuxmint::config::mintwelcome') }
         it { should contain_class('linuxmint::config::mintwelcome').that_requires('User[testuser]') }
         it { should contain_class('linuxmint::config::mintwelcome').that_requires('Group[testgroup]') }

@@ -46,12 +46,19 @@ class linuxmint (
     ],
   }
 
-  class { 'linuxmint::config::cinnamon':
+  class { 'linuxmint::config::applets':
     group   => $group,
     user    => $user,
     require => [
       User[$user],
       Group[$group],
+    ],
+  }
+
+  class { 'linuxmint::config::cinnamon':
+    user    => $user,
+    require => [
+      User[$user],
     ],
   }
 
@@ -72,10 +79,11 @@ class linuxmint (
   }
 
   contain linuxmint::install::applets
+  contain linuxmint::config::applets
   contain linuxmint::config::cinnamon
   contain linuxmint::config::mintwelcome
   contain linuxmint::config::software_centre
 
   Class['linuxmint::install::applets']
-  -> Class['linuxmint::config::cinnamon']
+  -> Class['linuxmint::config::applets']
 }
