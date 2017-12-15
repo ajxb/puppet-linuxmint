@@ -20,15 +20,42 @@ describe 'linuxmint' do
           ]
         end
 
+        it do
+          should contain_file('/home/testuser/.local/share/cinnamon').with(
+            ensure: 'directory',
+            owner:  'testuser',
+            group:  'testgroup',
+            mode:   '0775'
+          )
+        end
+        it { should contain_file('/home/testuser/.local/share/cinnamon').that_requires('Group[testgroup]') }
+        it { should contain_file('/home/testuser/.local/share/cinnamon').that_requires('User[testuser]') }
+
+        it do
+          should contain_file('/opt/packages_puppet-linuxmint').with(
+            ensure: 'directory',
+            group:  'root',
+            mode:   '0755',
+            owner:  'root'
+          )
+        end
+
         it { should compile.with_all_deps }
         it { should contain_class('linuxmint') }
+        it { should contain_class('linuxmint::config::applets') }
+        it { should contain_class('linuxmint::config::applets').that_requires('Class[linuxmint::install::applets]') }
+        it { should contain_class('linuxmint::config::applets').that_requires('Group[testgroup]') }
+        it { should contain_class('linuxmint::config::applets').that_requires('User[testuser]') }
         it { should contain_class('linuxmint::config::cinnamon') }
         it { should contain_class('linuxmint::config::cinnamon').that_requires('User[testuser]') }
         it { should contain_class('linuxmint::config::mintwelcome') }
-        it { should contain_class('linuxmint::config::mintwelcome').that_requires('User[testuser]') }
         it { should contain_class('linuxmint::config::mintwelcome').that_requires('Group[testgroup]') }
+        it { should contain_class('linuxmint::config::mintwelcome').that_requires('User[testuser]') }
         it { should contain_class('linuxmint::config::software_centre') }
         it { should contain_class('linuxmint::config::software_centre').that_requires('User[testuser]') }
+        it { should contain_class('linuxmint::install::applets') }
+        it { should contain_class('linuxmint::install::applets').that_requires('Group[testgroup]') }
+        it { should contain_class('linuxmint::install::applets').that_requires('User[testuser]') }
         it { should contain_class('linuxmint::params') }
       end
       context 'user param not set' do

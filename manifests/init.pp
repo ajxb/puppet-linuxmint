@@ -25,6 +25,10 @@ class linuxmint (
     owner  => $user,
     group  => $group,
     mode   => '0775',
+    require => [
+      User[$user],
+      Group[$group],
+    ],
   }
 
   file { $linuxmint::params::packages_root:
