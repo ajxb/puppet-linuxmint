@@ -41,15 +41,6 @@ class linuxmint (
   #############################################################################
   # Instatiate classes
   #############################################################################
-  class { 'linuxmint::install::applets':
-    group   => $group,
-    user    => $user,
-    require => [
-      User[$user],
-      Group[$group],
-    ],
-  }
-
   class { 'linuxmint::config::applets':
     group   => $group,
     user    => $user,
@@ -75,6 +66,13 @@ class linuxmint (
     ],
   }
 
+  class { 'linuxmint::config::nemo':
+    user    => $user,
+    require => [
+      User[$user],
+    ],
+  }
+
   class { 'linuxmint::config::software_centre':
     user    => $user,
     require => [
@@ -82,11 +80,21 @@ class linuxmint (
     ],
   }
 
-  contain linuxmint::install::applets
+  class { 'linuxmint::install::applets':
+    group   => $group,
+    user    => $user,
+    require => [
+      User[$user],
+      Group[$group],
+    ],
+  }
+
   contain linuxmint::config::applets
   contain linuxmint::config::cinnamon
   contain linuxmint::config::mintwelcome
+  contain linuxmint::config::nemo
   contain linuxmint::config::software_centre
+  contain linuxmint::install::applets
 
   Class['linuxmint::install::applets']
   -> Class['linuxmint::config::applets']

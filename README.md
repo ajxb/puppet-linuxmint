@@ -67,6 +67,7 @@ class { 'linuxmint':
 * `linuxmint::config::applets`: Handles the configuration of applets
 * `linuxmint::config::cinnamon`: Handles the configuration of cinnamon
 * `linuxmint::config::mintwelcome`: Handles the configuration of mint welcome
+* `linuxmint::config::nemo`: Handles the configuration of nemo
 * `linuxmint::config::software_centre`: Handles the configuration of software
 centre
 * `linuxmint::install::applets`: Handles the installation of applets
