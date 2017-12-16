@@ -20,108 +20,34 @@ class linuxmint::config::software_centre (
     subscribe => File['/etc/apt/sources.list.d/official-package-repositories.list'],
   }
 
-  gnome::gsettings { 'com.linuxmint.updates_show-policy-configuration':
-    schema => 'com.linuxmint.updates',
-    key    => 'show-policy-configuration',
-    value  => false,
-    user   => $user,
+  $schemas = {
+    'com.linuxmint.updates' => {
+      'kernel-updates-are-safe'      => false,
+      'kernel-updates-are-visible'   => true,
+      'level1-is-safe'               => true,
+      'level1-is-visible'            => true,
+      'level2-is-safe'               => true,
+      'level2-is-visible'            => true,
+      'level3-is-safe'               => false,
+      'level3-is-visible'            => true,
+      'level4-is-safe'               => false,
+      'level4-is-visible'            => true,
+      'level5-is-safe'               => false,
+      'level5-is-visible'            => false,
+      'security-updates-are-safe'    => true,
+      'security-updates-are-visible' => true,
+      'show-policy-configuration'    => false,
+    },
   }
 
-  gnome::gsettings { 'com.linuxmint.updates_level3-is-visible':
-    schema => 'com.linuxmint.updates',
-    key    => 'level3-is-visible',
-    value  => true,
-    user   => $user,
-  }
-
-  gnome::gsettings { 'com.linuxmint.updates_level4-is-visible':
-    schema => 'com.linuxmint.updates',
-    key    => 'level4-is-visible',
-    value  => true,
-    user   => $user,
-  }
-
-  gnome::gsettings { 'com.linuxmint.updates_level3-is-safe':
-    schema => 'com.linuxmint.updates',
-    key    => 'level3-is-safe',
-    value  => false,
-    user   => $user,
-  }
-
-  gnome::gsettings { 'com.linuxmint.updates_level4-is-safe':
-    schema => 'com.linuxmint.updates',
-    key    => 'level4-is-safe',
-    value  => false,
-    user   => $user,
-  }
-
-  gnome::gsettings { 'com.linuxmint.updates_security-updates-are-safe':
-    schema => 'com.linuxmint.updates',
-    key    => 'security-updates-are-safe',
-    value  => true,
-    user   => $user,
-  }
-
-  gnome::gsettings { 'com.linuxmint.updates_kernel-updates-are-safe':
-    schema => 'com.linuxmint.updates',
-    key    => 'kernel-updates-are-safe',
-    value  => false,
-    user   => $user,
-  }
-
-  gnome::gsettings { 'com.linuxmint.updates_level1-is-visible':
-    schema => 'com.linuxmint.updates',
-    key    => 'level1-is-visible',
-    value  => true,
-    user   => $user,
-  }
-
-  gnome::gsettings { 'com.linuxmint.updates_level2-is-visible':
-    schema => 'com.linuxmint.updates',
-    key    => 'level2-is-visible',
-    value  => true,
-    user   => $user,
-  }
-
-  gnome::gsettings { 'com.linuxmint.updates_level5-is-visible':
-    schema => 'com.linuxmint.updates',
-    key    => 'level5-is-visible',
-    value  => false,
-    user   => $user,
-  }
-
-  gnome::gsettings { 'com.linuxmint.updates_level1-is-safe':
-    schema => 'com.linuxmint.updates',
-    key    => 'level1-is-safe',
-    value  => true,
-    user   => $user,
-  }
-
-  gnome::gsettings { 'com.linuxmint.updates_level2-is-safe':
-    schema => 'com.linuxmint.updates',
-    key    => 'level2-is-safe',
-    value  => true,
-    user   => $user,
-  }
-
-  gnome::gsettings { 'com.linuxmint.updates_level5-is-safe':
-    schema => 'com.linuxmint.updates',
-    key    => 'level5-is-safe',
-    value  => false,
-    user   => $user,
-  }
-
-  gnome::gsettings { 'com.linuxmint.updates_security-updates-are-visible':
-    schema => 'com.linuxmint.updates',
-    key    => 'security-updates-are-visible',
-    value  => true,
-    user   => $user,
-  }
-
-  gnome::gsettings { 'com.linuxmint.updates_kernel-updates-are-visible':
-    schema => 'com.linuxmint.updates',
-    key    => 'kernel-updates-are-visible',
-    value  => true,
-    user   => $user,
+  $schemas.each |$schema, $settings| {
+    $settings.each |$key, $value| {
+      gnome::gsettings { "${schema}_${key}":
+        schema => $schema,
+        key    => $key,
+        value  => $value,
+        user   => $user,
+      }
+    }
   }
 }
