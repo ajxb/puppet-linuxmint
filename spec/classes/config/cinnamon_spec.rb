@@ -13,14 +13,6 @@ describe 'linuxmint::config::cinnamon' do
             user:  'testuser'
           }
         end
-        it do
-          should contain_gnome__gsettings('org.cinnamon_panels-enabled').with(
-            schema: 'org.cinnamon',
-            key:    'panels-enabled',
-            value:  '"[\'1:0:top\']"',
-            user:   'testuser'
-          )
-        end
       end
       context 'user param not set' do
         it do

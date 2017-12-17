@@ -21,17 +21,6 @@ describe 'linuxmint::config::applets' do
           ]
         end
 
-        it do
-          should contain_gnome__gsettings('org.cinnamon_enabled-applets').with(
-            schema: 'org.cinnamon',
-            key:    'enabled-applets',
-            value:  '"[\'panel1:right:1:systray@cinnamon.org:0\', \'panel1:left:0:menu@cinnamon.org:1\', \'panel1:left:1:show-desktop@cinnamon.org:2\', \'panel1:right:3:notifications@cinnamon.org:6\', \'panel1:right:4:removable-drives@cinnamon.org:7\', \'panel1:right:5:user@cinnamon.org:8\', \'panel1:right:6:network@cinnamon.org:9\', \'panel1:right:7:power@cinnamon.org:11\', \'panel1:center:0:calendar@cinnamon.org:12\', \'panel1:right:8:sound@cinnamon.org:13\', \'panel1:right:2:betterlock:17\', \'panel1:right:9:workspace-grid@hernejj:21\']"',
-            user:   'testuser'
-          )
-        end
-        it { should contain_gnome__gsettings('org.cinnamon_enabled-applets').that_requires('File[/home/testuser/.local/share/cinnamon/applets/betterlock]') }
-        it { should contain_gnome__gsettings('org.cinnamon_enabled-applets').that_requires('File[/home/testuser/.local/share/cinnamon/applets/workspace-grid@hernejj]') }
-
         cinnamon_config_folders = %w[
           /home/testuser/.cinnamon
           /home/testuser/.cinnamon/configs

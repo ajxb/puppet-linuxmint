@@ -13,26 +13,6 @@ describe 'linuxmint::config::nemo' do
             user: 'testuser'
           }
         end
-
-        schemas = {
-          'org.nemo.desktop' => {
-            'trash-icon-visible'   => true,
-            'network-icon-visible' => true
-          }
-        }
-
-        schemas.each do |schema, settings|
-          settings.each do |key, value|
-            it do
-              should contain_gnome__gsettings("#{schema}_#{key}").with(
-                schema: schema,
-                key:    key,
-                value:  value,
-                user:   'testuser'
-              )
-            end
-          end
-        end
       end
 
       context 'user param not set' do

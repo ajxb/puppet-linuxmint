@@ -48,6 +48,13 @@ describe 'linuxmint' do
         it { should contain_class('linuxmint::config::applets').that_requires('User[testuser]') }
         it { should contain_class('linuxmint::config::cinnamon') }
         it { should contain_class('linuxmint::config::cinnamon').that_requires('User[testuser]') }
+        it { should contain_class('linuxmint::config::gsettings') }
+        it { should contain_class('linuxmint::config::gsettings').that_requires('User[testuser]') }
+        it { should contain_class('linuxmint::config::gsettings').that_requires('Class[linuxmint::config::applets]') }
+        it { should contain_class('linuxmint::config::gsettings').that_requires('Class[linuxmint::config::cinnamon]') }
+        it { should contain_class('linuxmint::config::gsettings').that_requires('Class[linuxmint::config::mintwelcome]') }
+        it { should contain_class('linuxmint::config::gsettings').that_requires('Class[linuxmint::config::nemo]') }
+        it { should contain_class('linuxmint::config::gsettings').that_requires('Class[linuxmint::config::software_centre]') }
         it { should contain_class('linuxmint::config::mintwelcome') }
         it { should contain_class('linuxmint::config::mintwelcome').that_requires('Group[testgroup]') }
         it { should contain_class('linuxmint::config::mintwelcome').that_requires('User[testuser]') }

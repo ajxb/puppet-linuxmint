@@ -57,6 +57,13 @@ class linuxmint (
     ],
   }
 
+  class { 'linuxmint::config::gsettings':
+    user    => $user,
+    require => [
+      User[$user],
+    ],
+  }
+
   class { 'linuxmint::config::mintwelcome':
     group   => $group,
     user    => $user,
@@ -91,6 +98,7 @@ class linuxmint (
 
   contain linuxmint::config::applets
   contain linuxmint::config::cinnamon
+  contain linuxmint::config::gsettings
   contain linuxmint::config::mintwelcome
   contain linuxmint::config::nemo
   contain linuxmint::config::software_centre
@@ -98,4 +106,12 @@ class linuxmint (
 
   Class['linuxmint::install::applets']
   -> Class['linuxmint::config::applets']
+
+  Class[
+    'linuxmint::config::applets',
+    'linuxmint::config::cinnamon',
+    'linuxmint::config::mintwelcome',
+    'linuxmint::config::nemo',
+    'linuxmint::config::software_centre',
+  ] -> Class['linuxmint::config::gsettings']
 }
