@@ -6,5 +6,4 @@
 class linuxmint::config::cinnamon (
   String $user  = $linuxmint::params::user,
 ) inherits linuxmint::params {
-  assert_type(String[1], $user)
 }

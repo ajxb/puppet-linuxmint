@@ -42,30 +42,6 @@ describe 'linuxmint::config::mintwelcome' do
           )
         end
       end
-      context 'user param not set' do
-        let :params do
-          {
-            group: 'testgroup'
-          }
-        end
-        it do
-          expect do
-            subject.call
-          end.to raise_error(Puppet::PreformattedError, /parameter 'user' expects a String value, got Undef/)
-        end
-      end
-      context 'group param not set' do
-        let :params do
-          {
-            user: 'testuser'
-          }
-        end
-        it do
-          expect do
-            subject.call
-          end.to raise_error(Puppet::PreformattedError, /parameter 'group' expects a String value, got Undef/)
-        end
-      end
     end
   end
 end

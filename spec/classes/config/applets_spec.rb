@@ -74,30 +74,6 @@ describe 'linuxmint::config::applets' do
           it { should contain_file("/home/testuser/.cinnamon/configs/#{key}/#{value}").that_requires("File[/home/testuser/.cinnamon/configs/#{key}]") }
         end
       end
-      context 'user param not set' do
-        let :params do
-          {
-            group: 'testgroup'
-          }
-        end
-        it do
-          expect do
-            subject.call
-          end.to raise_error(Puppet::PreformattedError, /parameter 'user' expects a String value, got Undef/)
-        end
-      end
-      context 'group param not set' do
-        let :params do
-          {
-            user: 'testuser'
-          }
-        end
-        it do
-          expect do
-            subject.call
-          end.to raise_error(Puppet::PreformattedError, /parameter 'group' expects a String value, got Undef/)
-        end
-      end
     end
   end
 end

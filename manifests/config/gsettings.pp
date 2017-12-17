@@ -6,7 +6,6 @@
 class linuxmint::config::gsettings (
   String $user  = $linuxmint::params::user,
 ) inherits linuxmint::params {
-
   $linuxmint::params::gsettings.each |$schema, $settings| {
     $settings.each |$key, $value| {
       gnome::gsettings { "${schema}_${key}":

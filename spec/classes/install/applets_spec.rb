@@ -64,30 +64,6 @@ describe 'linuxmint::install::applets' do
         it { should contain_file('/home/testuser/.local/share/cinnamon/applets/workspace-grid@hernejj').that_requires('File[/home/testuser/.local/share/cinnamon/applets]') }
         it { should contain_file('/home/testuser/.local/share/cinnamon/applets/workspace-grid@hernejj').that_subscribes_to('Vcsrepo[/opt/packages_puppet-linuxmint/cinnamon-spices-applets]') }
       end
-      context 'user param not set' do
-        let :params do
-          {
-            group: 'testgroup'
-          }
-        end
-        it do
-          expect do
-            subject.call
-          end.to raise_error(Puppet::PreformattedError, /parameter 'user' expects a String value, got Undef/)
-        end
-      end
-      context 'group param not set' do
-        let :params do
-          {
-            user: 'testuser'
-          }
-        end
-        it do
-          expect do
-            subject.call
-          end.to raise_error(Puppet::PreformattedError, /parameter 'group' expects a String value, got Undef/)
-        end
-      end
     end
   end
 end

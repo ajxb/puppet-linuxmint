@@ -8,9 +8,6 @@ class linuxmint::config::applets (
   String $group = $linuxmint::params::group,
   String $user  = $linuxmint::params::user,
 ) inherits linuxmint::params {
-  assert_type(String[1], $user)
-  assert_type(String[1], $group)
-
   $cinnamon_config_folders = [
     "/home/${user}/.cinnamon",
     "/home/${user}/.cinnamon/configs",

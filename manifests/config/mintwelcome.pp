@@ -8,9 +8,6 @@ class linuxmint::config::mintwelcome (
   String $group = $linuxmint::params::group,
   String $user  = $linuxmint::params::user,
 ) inherits linuxmint::params {
-  assert_type(String[1], $user)
-  assert_type(String[1], $group)
-
   $dirs = [
     "/home/${user}/.linuxmint",
     "/home/${user}/.linuxmint/mintwelcome",

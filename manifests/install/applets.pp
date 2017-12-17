@@ -8,9 +8,6 @@ class linuxmint::install::applets (
   String $group = $linuxmint::params::group,
   String $user  = $linuxmint::params::user,
 ) inherits linuxmint::params {
-  assert_type(String[1], $user)
-  assert_type(String[1], $group)
-
   file { "/home/${user}/.local/share/cinnamon/applets":
     ensure => 'directory',
     owner  => $user,
