@@ -64,6 +64,8 @@ class linuxmint (
     ],
   }
 
+  class { 'linuxmint::config::lightdm': }
+
   class { 'linuxmint::config::mintwelcome':
     group   => $group,
     user    => $user,
@@ -99,6 +101,7 @@ class linuxmint (
   contain linuxmint::config::applets
   contain linuxmint::config::cinnamon
   contain linuxmint::config::gsettings
+  contain linuxmint::config::lightdm
   contain linuxmint::config::mintwelcome
   contain linuxmint::config::nemo
   contain linuxmint::config::software_centre
